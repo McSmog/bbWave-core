@@ -1,9 +1,11 @@
+import sys
 import argparse
 import logging
 
 import bbWave.config as config
 import bbWave.files.metadata as metadata
 from bbWave.files.treewalker import TreeWalker
+from bbWave.database import Database
 
 CONFIG = []
 
@@ -22,15 +24,19 @@ def main():
 
     global CONFIG
     CONFIG = config.get_configuration(args.config)
-    print(CONFIG)
+
+    db = Database(CONFIG['DATABASE']['path'])
 
     tree_walker = TreeWalker(CONFIG['PATH']['music_directory'])
     tree_walker.build_files_list()
 
     meta_to_db = []
     for filepath in tree_walker.get_file_list():
-        meta_to_db.append(metadata.get_audio_info(filepath))
-    print(len(meta_to_db))
+        new_meta = metadata.get_audio_info(filepath)
+        if new_meta:
+            meta_to_db.append(new_meta)
+
+    db.record_music_info(meta_to_db)
 
 
 if __name__ == '__main__':
