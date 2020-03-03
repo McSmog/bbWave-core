@@ -39,14 +39,14 @@ class Database:
     def record_music_info(self, metadata_array):
         for track in metadata_array:
             meta = [(
-                track.filename,
-                track.info.length,
-                track.tags['TITLE'][0],
-                track.tags['ARTIST'][0],
-                track.tags['ALBUM'][0],
-                track.tags['GENRE'][0],
-                track.tags['TRACKNUMBER'][0],
-                track.tags['DATE'][0]
+                track['file_path'],
+                track['length'],
+                track['title'],
+                track['artist'],
+                track['album'],
+                track['genre'],
+                track['track_number'],
+                track['year']
             )]
 
             self.cursor.executemany('INSERT INTO music VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?)', meta)

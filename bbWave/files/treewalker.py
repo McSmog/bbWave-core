@@ -5,9 +5,9 @@ import logging
 class TreeWalker:
     root_dir_path = ''
     files_path_list = []
+    files_count = 0
     supported_extensions_list = [
-        'mp3', 'wav', 'm4a', 'flac', 'ogg', 'wave', 'ogv', 'oga', 'ogx', 'ogm', 'spx', 'opus', 'webm', 'mp4', '3gp',
-        'm4b', 'm4p', 'm4r', 'm4v'
+        'mp3', 'm4a', 'flac', 'ogg', 'ogv', 'oga', 'ogx', 'ogm', 'spx', 'opus', 'm4b', 'm4p', 'm4r', 'm4v'
     ]
 
     def __init__(self, root_dir_path):
@@ -20,7 +20,7 @@ class TreeWalker:
             logging.info('Found directory "{}"'.format(self.root_dir_path))
 
         self.__recursive_search(self.root_dir_path)
-        logging.info('Found {} files'.format(len(self.files_path_list)))
+        self.files_count = len(self.files_path_list)
 
     def __recursive_search(self, root_path):
         current_dir = os.listdir(root_path)
