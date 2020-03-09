@@ -22,6 +22,8 @@ class TreeWalker:
         self.__recursive_search(self.root_dir_path)
         self.files_count = len(self.files_path_list)
 
+        logging.info('Found {} files'.format(self.files_count))
+
     def __recursive_search(self, root_path):
         current_dir = os.listdir(root_path)
         for filename in current_dir:
