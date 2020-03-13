@@ -1,3 +1,4 @@
+import os
 import sys
 import logging
 import sqlite3
@@ -8,6 +9,11 @@ class Database:
     cursor = None
 
     def __init__(self, path_to_db):
+        if not os.path.exists(path_to_db):
+            logging.info('Database "{}" does not exists and will be created'.format(path_to_db))
+        else:
+            logging.info('Found database "{}"'.format(path_to_db))
+
         try:
             self.connection = sqlite3.connect(path_to_db)
         except sqlite3.OperationalError:
